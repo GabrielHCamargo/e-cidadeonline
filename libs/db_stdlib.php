@@ -973,8 +973,8 @@ function printfieldsmemory($recordset,$indice){
  $fm_numfields = pg_numfields($recordset);
   for ($i=0;$i < $fm_numfields;$i ++){
     $matriz[$i] = pg_fieldname($recordset,$i);
-    $$matriz[$i] = trim(pg_result($recordset,$indice,$matriz[$i]));
-    echo $matriz[$i]." - ".$$matriz[$i]."<br>";
+    ${$matriz[$i]} = trim(pg_result($recordset,$indice,$matriz[$i]));
+    echo $matriz[$i]." - ".${$matriz[$i]}."<br>";
   }
 }
 
@@ -1052,7 +1052,6 @@ function db_msgbox2($str) {
 }
 function postmemory($vetor,$verNomeIndices = 0) {
   if(!is_array($vetor)) {
-    echo "Erro na função postmemory: Parametro não é um array válido.<Br>\n";
         return false;
   }
   $tam_vetor = sizeof($vetor);
@@ -1061,12 +1060,12 @@ function postmemory($vetor,$verNomeIndices = 0) {
     echo "<br><br>\n";
   for($i = 0;$i < $tam_vetor;$i++) {
     $matriz[$i] = key($vetor);
-        global $$matriz[$i];
-        $$matriz[$i] = $vetor[$matriz[$i]];
+        global ${$matriz[$i]};
+        ${$matriz[$i]} = $vetor[$matriz[$i]];
         if($verNomeIndices == 1)
           echo "$".$matriz[$i]."<br>\n";
         else if($verNomeIndices == 2)
-          echo "$".$matriz[$i]." = '".$$matriz[$i]."';<br>\n";
+          echo "$".$matriz[$i]." = '".${$matriz[$i]}."';<br>\n";
     next($vetor);
   }
   if($verNomeIndices > 0)
@@ -1752,9 +1751,9 @@ function db_postmemory($vetor,$verNomeIndices = 0) {
 
     $matriz[$i] = key($vetor);
 
-        global $$matriz[$i];
+        global ${$matriz[$i]};
 
-        $$matriz[$i] = $vetor[$matriz[$i]];
+        ${$matriz[$i]} = $vetor[$matriz[$i]];
 
         if($verNomeIndices == 1)
 
@@ -1762,7 +1761,7 @@ function db_postmemory($vetor,$verNomeIndices = 0) {
 
         else if($verNomeIndices == 2)
 
-          echo "$".$matriz[$i]." = '".$$matriz[$i]."';<br>\n";
+          echo "$".$matriz[$i]." = '".${$matriz[$i]}."';<br>\n";
 
     next($vetor);
 
@@ -1945,7 +1944,7 @@ function db_fieldsmemory($recordset,$indice,$formatar="", $mostravar=false){
     $matriz[$i] = pg_fieldname($recordset,$i);
 
 
-    global $$matriz[$i];
+    global ${$matriz[$i]};
 
         $aux = trim(pg_result($recordset,$indice,$matriz[$i]));
 
@@ -1959,7 +1958,7 @@ function db_fieldsmemory($recordset,$indice,$formatar="", $mostravar=false){
 
             case "float":
 
-          $$matriz[$i] = number_format($aux,2,",",".");
+          ${$matriz[$i]} = number_format($aux,2,",",".");
 
                   break;
 
@@ -1969,11 +1968,11 @@ function db_fieldsmemory($recordset,$indice,$formatar="", $mostravar=false){
 
                     $data = split("-",$aux);
 
-                    $$matriz[$i] = $data[2]."/".$data[1]."/".$data[0];
+                    ${$matriz[$i]} = $data[2]."/".$data[1]."/".$data[0];
 
                   }else{
 
-                    $$matriz[$i] = "";
+                    ${$matriz[$i]} = "";
 
                   }
 
@@ -1981,7 +1980,7 @@ function db_fieldsmemory($recordset,$indice,$formatar="", $mostravar=false){
 
                 default:
 
-          $$matriz[$i] = $aux;
+          ${$matriz[$i]} = $aux;
 
                   break;
 
@@ -2014,20 +2013,20 @@ function db_fieldsmemory($recordset,$indice,$formatar="", $mostravar=false){
 
           $$split_data =  @$datav[0];
 
-          $$matriz[$i] = $aux;
+          ${$matriz[$i]} = $aux;
 
                   break;
 
                 default:
 
-          $$matriz[$i] = $aux;
+          ${$matriz[$i]} = $aux;
 
                   break;
 
           }
-          $$matriz[$i] = stripslashes($aux);
+          ${$matriz[$i]} = stripslashes($aux);
                         if ($mostravar == true)
-                        echo $matriz[$i]."->".$$matriz[$i]."<br>";
+                        echo $matriz[$i]."->".${$matriz[$i]}."<br>";
   }
 
 }
@@ -3359,7 +3358,7 @@ if ($datahoje == "?")
   $i = $dias;
   for($i = 0;$i<$dias;$i++)
   {
-    if ($mes == 01 || $mes == 03 || $mes == 05 || $mes == 07 || $mes == 8 || $mes == 10 || $mes == 12)
+    if ($mes == 1 || $mes == 3 || $mes == 5 || $mes == 7 || $mes == 8 || $mes == 10 || $mes == 12)
     {
       if($mes == 12 && $dia == 31)
       {
@@ -3373,7 +3372,7 @@ if ($datahoje == "?")
       $dia = 00;
     }
   }
-  if($mes == 04 || $mes == 06 || $mes == 09 || $mes == 11)
+  if($mes == 4 || $mes == 6 || $mes == 9 || $mes == 11)
   {
     if($dia == 30)
     {
@@ -3382,7 +3381,7 @@ if ($datahoje == "?")
     }
   }
 
-  if($mes == 02)
+  if($mes == 2)
   {
     if($ano % 4 == 0 && $ano % 100 != 0)
     {

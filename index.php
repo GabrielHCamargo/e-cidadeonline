@@ -26,6 +26,18 @@
  */
 
 session_start();
+
+if (!function_exists('session_register')) {
+    function session_register(...$args) {
+        foreach ($args as $key) {
+            if (!isset($_SESSION[$key])) {
+                $_SESSION[$key] = $GLOBALS[$key] ?? null;
+            }
+        }
+    }
+    function session_is_registered($key) { return isset($_SESSION[$key]); }
+    function session_unregister($key) { unset($_SESSION[$key]); }
+}
 global $HTTP_SESSION_VARS;
 session_register("DB_codperfil");
 

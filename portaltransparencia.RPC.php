@@ -50,7 +50,7 @@ switch ($oParam->exec) {
     $iAnoCorrente   = date("Y", db_getsession("DB_datausu"));
     $iDiaCorrente   = date("d", db_getsession("DB_datausu"));
     if ($iMesCorrente == $oParam->iMes && $iAnoCorrente == $oParam->iAno) {
-      $sDataFinal     = date("Y-m-d", mktime(0,0,0,$oParam->iMes, $iDiaCorrente-2, $oParam->iAno));
+      $sDataFinal     = date("Y-m-d", mktime(0,0,0,$oParam->iMes, $iDiaCorrente, $oParam->iAno));
                                                              
     }
     $rsReceitaSaldo = db_receitasaldo(11,1,3, true, "o70_instit = ".db_getsession("DB_instit") ,
@@ -72,7 +72,7 @@ switch ($oParam->exec) {
     $iAnoCorrente   = date("Y", db_getsession("DB_datausu"));
     $iDiaCorrente   = date("d", db_getsession("DB_datausu"));
     if ($iMesCorrente == $oParam->iMes && $iAnoCorrente == $oParam->iAno) {
-      $sDataFinal     = date("Y-m-d", mktime(0,0,0,$oParam->iMes, $iDiaCorrente-2, $oParam->iAno));
+      $sDataFinal     = date("Y-m-d", mktime(0,0,0,$oParam->iMes, $iDiaCorrente, $oParam->iAno));
                                                              
     }
     $rsDotacaoSaldo = db_dotacaosaldo(8, 1, 4, true, $sWhere,

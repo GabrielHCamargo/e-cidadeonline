@@ -25,13 +25,64 @@
  *                                licenca/licenca_pt.txt 
  */
 
+if (!function_exists('session_register')) {
+    function session_register(...$args) {
+        foreach ($args as $key) {
+            if (!isset($_SESSION[$key])) {
+                $_SESSION[$key] = $GLOBALS[$key] ?? null;
+            }
+        }
+    }
+    function session_is_registered($key) { return isset($_SESSION[$key]); }
+    function session_unregister($key) { unset($_SESSION[$key]); }
+}
+
+if (!function_exists('split')) {
+    function split($pattern, $string, $limit = -1) {
+        return mb_split($pattern, $string, $limit);
+    }
+}
+if (!function_exists('ereg')) {
+    function ereg($pattern, $string, &$regs = null) {
+        return preg_match('/' . addcslashes($pattern, '/') . '/', $string, $regs);
+    }
+}
+if (!function_exists('eregi')) {
+    function eregi($pattern, $string, &$regs = null) {
+        return preg_match('/' . addcslashes($pattern, '/') . '/i', $string, $regs);
+    }
+}
+if (!function_exists('ereg_replace')) {
+    function ereg_replace($pattern, $replacement, $string) {
+        return preg_replace('/' . addcslashes($pattern, '/') . '/', $replacement, $string);
+    }
+}
+if (!function_exists('eregi_replace')) {
+    function eregi_replace($pattern, $replacement, $string) {
+        return preg_replace('/' . addcslashes($pattern, '/') . '/i', $replacement, $string);
+    }
+}
+
+$GLOBALS['HTTP_POST_VARS'] = &$_POST;
+$GLOBALS['HTTP_GET_VARS'] = &$_GET;
+$GLOBALS['HTTP_SERVER_VARS'] = &$_SERVER;
+$GLOBALS['HTTP_ENV_VARS'] = &$_ENV;
+$GLOBALS['HTTP_COOKIE_VARS'] = &$_COOKIE;
+global $HTTP_POST_VARS, $HTTP_GET_VARS, $HTTP_SERVER_VARS, $HTTP_ENV_VARS, $HTTP_COOKIE_VARS;
+$HTTP_POST_VARS = &$_POST;
+$HTTP_GET_VARS = &$_GET;
+$HTTP_SERVER_VARS = &$_SERVER;
+$HTTP_ENV_VARS = &$_ENV;
+$HTTP_COOKIE_VARS = &$_COOKIE;
+
 $DB_INSTITUICAO = 1;
-$DB_SERVIDOR="localhost";
-$DB_BASEDADOS = "e-cidade";
-$DB_USUARIO="ecidade";
-$DB_SENHA="";
-$DB_PORTA="5432";
+$DB_SERVIDOR = getenv('DB_HOST') ?: (getenv('DB_PORTAL_HOST') ?: "postgres_dbportal");
+$DB_BASEDADOS = getenv('DB_DATABASE') ?: "dbportal";
+$DB_USUARIO = getenv('DB_USER') ?: "ecidade";
+$DB_SENHA = getenv('DB_PASS') ?: "";
+$DB_PORTA = getenv('DB_PORT') ?: "5432";
 global $configsite;
 $configsite = "1";
 ini_set("error_reporting","E_ALL & ~NOTICE");
+ini_set("default_charset", "ISO-8859-1");
 ?>

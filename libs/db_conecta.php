@@ -26,6 +26,18 @@
  */
 
 include("db_conn.php");
+
+if (!function_exists('session_register')) {
+    function session_register(...$args) {
+        foreach ($args as $key) {
+            if (!isset($_SESSION[$key])) {
+                $_SESSION[$key] = $GLOBALS[$key] ?? null;
+            }
+        }
+    }
+    function session_is_registered($key) { return isset($_SESSION[$key]); }
+    function session_unregister($key) { unset($_SESSION[$key]); }
+}
 if (!isset($HTTP_SESSION_VARS["DB_instit"])){
   if (!session_is_registered("DB_instit")){  
     session_register("DB_instit");
